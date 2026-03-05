@@ -23,6 +23,9 @@ struct MenuBarView: View {
         .frame(minWidth: 260)
         .padding(8)
         .onDisappear { screen = .list }
+        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didResignKeyNotification)) { _ in
+            screen = .list
+        }
     }
 }
 
