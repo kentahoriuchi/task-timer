@@ -26,19 +26,17 @@ struct TaskRowView: View {
 
             Spacer()
 
-            if isHovered {
-                Button {
-                    taskManager.deleteTask(task)
-                } label: {
-                    Image(systemName: "trash")
-                        .foregroundColor(.red)
-                }
-                .buttonStyle(.plain)
-            } else {
-                Text(displayTime)
-                    .font(.system(.caption, design: .monospaced))
-                    .foregroundColor(isRunning ? .green : .secondary)
+            Text(displayTime)
+                .font(.system(.caption, design: .monospaced))
+                .foregroundColor(isRunning ? .green : .secondary)
+
+            Button {
+                taskManager.deleteTask(task)
+            } label: {
+                Image(systemName: "trash")
+                    .foregroundColor(isHovered ? .secondary : .clear)
             }
+            .buttonStyle(.plain)
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
