@@ -16,13 +16,6 @@ class TaskManager: ObservableObject {
         }
     }
 
-    var menuBarLabel: String {
-        guard let id = currentTaskId, let task = tasks.first(where: { $0.id == id }) else {
-            return "⌚ No Task"
-        }
-        return "⌚ \(task.name) \(formatTime(elapsedSeconds))"
-    }
-
     func startTask(_ task: Task) {
         if currentTaskId == task.id {
             stopCurrentTask()

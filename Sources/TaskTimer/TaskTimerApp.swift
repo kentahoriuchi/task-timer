@@ -10,8 +10,24 @@ struct TaskTimerApp: App {
             MenuBarView()
                 .environmentObject(taskManager)
         } label: {
-            Text(taskManager.menuBarLabel)
+            MenuBarLabel(taskManager: taskManager)
         }
         .menuBarExtraStyle(.window)
+    }
+}
+
+private struct MenuBarLabel: View {
+    @ObservedObject var taskManager: TaskManager
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Text("⌚")
+            Text(taskManager.currentTaskId != nil
+                 ? taskManager.formatTime(taskManager.elapsedSeconds)
+                 : "--:--:--")
+            .monospacedDigit()
+        }
+        // 固定幅でラベルサイズを変動させない
+        .frame(width: 100, alignment: .leading)
     }
 }
