@@ -22,6 +22,7 @@ struct MenuBarView: View {
         .environmentObject(taskManager)
         .frame(minWidth: 260)
         .padding(8)
+        .onDisappear { screen = .list }
     }
 }
 
