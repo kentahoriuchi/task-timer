@@ -3,6 +3,7 @@ import SwiftUI
 struct TaskRowView: View {
     @EnvironmentObject var taskManager: TaskManager
     let task: Task
+    @State private var isHovered = false
 
     private var isRunning: Bool {
         taskManager.currentTaskId == task.id
@@ -25,22 +26,28 @@ struct TaskRowView: View {
 
             Spacer()
 
-            Text(displayTime)
-                .font(.system(.caption, design: .monospaced))
-                .foregroundColor(isRunning ? .green : .secondary)
+            if isHovered {
+                Button {
+                    taskManager.deleteTask(task)
+                } label: {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                }
+                .buttonStyle(.plain)
+            } else {
+                Text(displayTime)
+                    .font(.system(.caption, design: .monospaced))
+                    .foregroundColor(isRunning ? .green : .secondary)
+            }
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
         .background(isRunning ? Color.green.opacity(0.1) : Color.clear)
         .cornerRadius(6)
         .contentShape(Rectangle())
+        .onHover { isHovered = $0 }
         .onTapGesture {
             taskManager.startTask(task)
-        }
-        .contextMenu {
-            Button("Delete", role: .destructive) {
-                taskManager.deleteTask(task)
-            }
         }
     }
 }
